@@ -1,7 +1,7 @@
 """
 Python FastAPI microservice for darts180 image generation.
 Runs on port 5001, proxied by Express from /api/generate.
-Uses pplx.python.sdks.llm_api for image generation.
+Uses OpenAI API (gpt-image-1) for image generation.
 After generation, composites the real darts180 logo onto the image.
 """
 
@@ -195,7 +195,7 @@ async def generate(request: Request):
             image_bytes=image_bytes,
             image_media_type=image_media_type,
             aspect_ratio=aspect_ratio,
-            model="nano_banana_2",
+            model="gpt-image-1",
         )
 
         # Composite the real logo
@@ -210,7 +210,10 @@ async def generate(request: Request):
         print(f"Error generating image: {e}", file=sys.stderr)
         import traceback
         traceback.print_exc(file=sys.stderr)
-        return JSONResponse(status_code=500, content={"error": str(e)})
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Erreur lors de la génération de l'image.", "details": str(e)}
+        )
 
 
 @app.get("/health")
