@@ -26,7 +26,8 @@ RUN chmod +x start.sh
 # Railway sets PORT env var automatically
 ENV NODE_ENV=production
 ENV PYTHON_IMAGE_SERVER=http://127.0.0.1:5001
+ENV PORT=8080
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["./start.sh"]

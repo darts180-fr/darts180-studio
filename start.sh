@@ -6,7 +6,7 @@ echo "Starting darts180 Studio..."
 # Start Python image server in background
 echo "Starting Python image server on port 5001..."
 cd /app
-python image_server.py &
+python3 image_server.py &
 PYTHON_PID=$!
 
 # Wait for Python server to be ready
@@ -24,5 +24,5 @@ for i in $(seq 1 30); do
 done
 
 # Start Node.js Express server (foreground)
-echo "Starting Express server on port ${PORT:-3000}..."
+echo "Starting Express server on port ${PORT:-8080}..."
 exec node /app/dist/index.cjs
