@@ -76,7 +76,7 @@ COMPOSITION :
 - Mise en page propre avec beaucoup d'espace n\xE9gatif.
 - Zone de texte \xE0 gauche ou en haut, zone d'illustration \xE0 droite ou au centre.
 - Des lignes diagonales ou des trajectoires peuvent sugg\xE9rer le mouvement.
-- NE PAS dessiner de logo dans l'image.
+- NE PAS dessiner de logo, de nom de marque, ni \xE9crire "darts180" ou "DARTS180" dans l'image. Aucun logo ni texte de marque.
 - MARGE INT\xC9RIEURE OBLIGATOIRE : tout le contenu visuel (texte, illustrations, \xE9l\xE9ments graphiques) doit rester \xE0 au moins 20 pixels du bord de l'image sur les 4 c\xF4t\xE9s. Ne jamais placer de texte ou d'\xE9l\xE9ment important en contact avec le bord de l'image.
 
 R\xC8GLES TEXTE :
@@ -89,7 +89,8 @@ INTERDITS :
 - Aucune r\xE9f\xE9rence aux casinos, paris ou jeux d'argent.
 - Aucun texte en anglais.
 - Pas d'arri\xE8re-plan trop charg\xE9.
-- Pas de photographies \u2014 uniquement du style illustration vectorielle plate.`,pf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
+- Pas de photographies \u2014 uniquement du style illustration vectorielle plate.
+- NE JAMAIS \xE9crire "darts180", "DARTS180", "darts180.fr" ou tout nom de marque dans l'image. Le logo sera g\xE9r\xE9 s\xE9par\xE9ment.`,pf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
 
 CONTEXTE :
 - Type de preset : {{PRESET}}
@@ -118,7 +119,7 @@ INT\xC9GRATION PHOTO :
 - Si aucune photo n'est fournie, cr\xE9er une illustration compl\xE8te dans le m\xEAme style de marque.
 
 COMPOSITION :
-- NE PAS dessiner de logo.
+- NE PAS dessiner de logo, de nom de marque, ni \xE9crire "darts180" ou "DARTS180" dans l'image. Aucun logo ni texte de marque.
 - MARGE INT\xC9RIEURE OBLIGATOIRE : tout le contenu visuel (texte, illustrations, \xE9l\xE9ments graphiques) doit rester \xE0 au moins 20 pixels du bord de l'image sur les 4 c\xF4t\xE9s. Ne jamais placer de texte ou d'\xE9l\xE9ment important en contact avec le bord de l'image.
 - Titre et CTA clairement positionn\xE9s, en fran\xE7ais.
 - Un seul objet focal principal.
@@ -138,7 +139,8 @@ R\xC8GLES TEXTE :
 INTERDITS :
 - Aucune r\xE9f\xE9rence aux casinos, paris ou jeux d'argent.
 - Aucun texte en anglais.
-- Pas d'arri\xE8re-plan trop charg\xE9.`,uf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
+- Pas d'arri\xE8re-plan trop charg\xE9.
+- NE JAMAIS \xE9crire "darts180", "DARTS180", "darts180.fr" ou tout nom de marque dans l'image.`,uf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
 
 CONTEXTE :
 - Type de preset : {{PRESET}}
@@ -167,7 +169,7 @@ INT\xC9GRATION PHOTO :
 - Si aucune photo, cr\xE9er un visuel complet dans le style de marque.
 
 COMPOSITION VERTICALE :
-- NE PAS dessiner de logo.
+- NE PAS dessiner de logo, de nom de marque, ni \xE9crire "darts180" ou "DARTS180" dans l'image. Aucun logo ni texte de marque.
 - MARGE INT\xC9RIEURE OBLIGATOIRE : tout le contenu visuel (texte, illustrations, \xE9l\xE9ments graphiques) doit rester \xE0 au moins 20 pixels du bord de l'image sur les 4 c\xF4t\xE9s. Ne jamais placer de texte ou d'\xE9l\xE9ment important en contact avec le bord de l'image.
 - Titre grand et impactant en haut ou au centre de l'image.
 - CTA positionn\xE9 en bas de l'image (ex: "D\xE9couvrir", "Swipe up", "En savoir plus").
@@ -190,7 +192,8 @@ R\xC8GLES TEXTE :
 INTERDITS :
 - Aucune r\xE9f\xE9rence aux casinos, paris ou jeux d'argent.
 - Aucun texte en anglais.
-- Pas d'arri\xE8re-plan trop charg\xE9.`,lf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
+- Pas d'arri\xE8re-plan trop charg\xE9.
+- NE JAMAIS \xE9crire "darts180", "DARTS180", "darts180.fr" ou tout nom de marque dans l'image.`,lf=`Tu es un directeur artistique expert en cr\xE9ation de visuels pour une marque fran\xE7aise de fl\xE9chettes appel\xE9e darts180.
 
 CONTEXTE :
 - Contexte du test : {{TOPIC}}
@@ -225,7 +228,7 @@ INT\xC9GRATION PRODUIT :
   \u2022 Nom du produit clairement visible en style Oswald.
 
 COMPOSITION :
-- NE PAS dessiner de logo.
+- NE PAS dessiner de logo, de nom de marque, ni \xE9crire "darts180" ou "DARTS180" dans l'image. Aucun logo ni texte de marque.
 - MARGE INT\xC9RIEURE OBLIGATOIRE : tout le contenu visuel (texte, illustrations, \xE9l\xE9ments graphiques) doit rester \xE0 au moins 20 pixels du bord de l'image sur les 4 c\xF4t\xE9s. Ne jamais placer de texte ou d'\xE9l\xE9ment important en contact avec le bord de l'image.
 - Produit plac\xE9 au centre ou l\xE9g\xE8rement \xE0 gauche.
 - Informations de test (note, pros, cons) dispos\xE9es \xE0 droite ou autour du produit.
@@ -242,7 +245,8 @@ INTERDITS :
 - Aucune r\xE9f\xE9rence aux casinos, paris ou jeux d'argent.
 - Aucun texte en anglais.
 - Pas d'arri\xE8re-plan trop charg\xE9.
-- Ne pas d\xE9former la photo du produit.`;function R(t,e,a){let r=a?.trim()||"(non sp\xE9cifi\xE9)";return t.replaceAll(e,r)}function us(t){return!t||t.length===0?"(aucun)":t.filter(e=>e.trim().length>0).map(e=>`  - ${e.trim()}`).join(`
+- Ne pas d\xE9former la photo du produit.
+- NE JAMAIS \xE9crire "darts180", "DARTS180", "darts180.fr" ou tout nom de marque dans l'image.`;function R(t,e,a){let r=a?.trim()||"(non sp\xE9cifi\xE9)";return t.replaceAll(e,r)}function us(t){return!t||t.length===0?"(aucun)":t.filter(e=>e.trim().length>0).map(e=>`  - ${e.trim()}`).join(`
 `)}function c8(t){return t?t.split(`
 `).map(e=>e.replace(/^[-•*]\s*/,"").trim()).filter(e=>e.length>0):[]}function df(t){let e=cf;e=R(e,"{{PRESET}}",t.preset),e=R(e,"{{TOPIC}}",t.topic),e=R(e,"{{TITLE}}",t.title),e=R(e,"{{SUBTITLE}}",t.subtitle||"(pas de sous-titre)");let a=c8(t.bulletPoints);return e=R(e,"{{BULLET_POINTS}}",a.length>0?us(a):"  (pas de points cl\xE9s sp\xE9cifi\xE9s \u2014 simplifier le visuel)"),e}function ff(t){let e=pf;return e=R(e,"{{PRESET}}",t.preset),e=R(e,"{{TOPIC}}",t.topic),e=R(e,"{{HEADLINE}}",t.headline),e=R(e,"{{SUBHEADLINE}}",t.subheadline||"(pas de sous-titre)"),e=R(e,"{{CTA}}",t.cta||"(pas de CTA)"),e=R(e,"{{PRICE}}",t.price||"(pas de prix)"),e=R(e,"{{EVENT_INFO}}",t.eventInfo||"(pas d'info \xE9v\xE9nement)"),e}function mf(t){let e=uf;return e=R(e,"{{PRESET}}",t.preset),e=R(e,"{{TOPIC}}",t.topic),e=R(e,"{{HEADLINE}}",t.headline),e=R(e,"{{SUBHEADLINE}}",t.subheadline||"(pas de sous-titre)"),e=R(e,"{{CTA}}",t.cta||"D\xE9couvrir"),e=R(e,"{{PRICE}}",t.price||"(pas de prix)"),e=R(e,"{{EVENT_INFO}}",t.eventInfo||"(pas d'info \xE9v\xE9nement)"),e}function hf(t){let e=lf;return e=R(e,"{{TOPIC}}",t.topic),e=R(e,"{{PRODUCT_NAME}}",t.productName),e=R(e,"{{HEADLINE}}",t.headline),e=R(e,"{{SUBHEADLINE}}",t.subheadline||"(pas de sous-titre)"),e=R(e,"{{RATING}}",t.rating),e=R(e,"{{PROS}}",us(t.pros)),e=R(e,"{{CONS}}",t.cons&&t.cons.length>0?us(t.cons):"  (aucun point faible mentionn\xE9)"),e}var p8=process.env.PYTHON_IMAGE_SERVER||"http://127.0.0.1:5001",u8=G.object({mediaType:G.enum(["blog_hero","instagram_post","instagram_story","product_review_media"]),preset:G.enum(["promo","tournoi","guide","review"]),topic:G.string().min(1,"Le sujet est requis"),headline:G.string().optional().default(""),subheadline:G.string().optional().default(""),cta:G.string().optional().default(""),price:G.string().optional().default(""),eventInfo:G.string().optional().default(""),bulletPoints:G.string().optional().default(""),productName:G.string().optional().default(""),rating:G.string().optional().default(""),pros:G.string().optional().default(""),cons:G.string().optional().default(""),imageData:G.string().nullable().optional()});function l8(t){let{mediaType:e,preset:a}=t;switch(e){case"blog_hero":return df({preset:a,topic:t.topic,title:t.headline||t.topic,subtitle:t.subheadline||void 0,bulletPoints:t.bulletPoints||void 0});case"instagram_post":return ff({preset:a,topic:t.topic,headline:t.headline||t.topic,subheadline:t.subheadline||void 0,cta:t.cta||void 0,price:t.price||void 0,eventInfo:t.eventInfo||void 0});case"instagram_story":return mf({preset:a,topic:t.topic,headline:t.headline||t.topic,subheadline:t.subheadline||void 0,cta:t.cta||void 0,price:t.price||void 0,eventInfo:t.eventInfo||void 0});case"product_review_media":return hf({topic:t.topic,productName:t.productName||t.topic,headline:t.headline||"TEST COMPLET",subheadline:t.subheadline||void 0,rating:t.rating||"N/A",pros:t.pros?t.pros.split(`
 `).filter(r=>r.trim()):[],cons:t.cons?t.cons.split(`
