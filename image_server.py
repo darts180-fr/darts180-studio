@@ -2,7 +2,7 @@
 Python FastAPI microservice for darts180 image generation.
 Runs on port 5001, proxied by Express from /api/generate.
 Uses OpenAI API (gpt-image-1) for image generation.
-After generation, composites the real darts180 logo onto the image.
+After generation, enforces a minimum 20px inner margin.
 """
 
 import base64
@@ -14,16 +14,11 @@ from typing import Optional
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import uvicorn
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image
 
 from generate_image import generate_image
 
 app = FastAPI()
-
-# ── Paths to logo files ──────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-LOGO_LIGHT_BG = os.path.join(SCRIPT_DIR, "logo-light.jpg")  # Black DARTS + blue 180 — best on light bg
-LOGO_DARK_BG = os.path.join(SCRIPT_DIR, "logo-dark.jpg")    # All-blue version — used with backdrop on dark bg
 
 # Aspect ratio mapping for media types
 ASPECT_RATIOS = {
@@ -33,126 +28,71 @@ ASPECT_RATIOS = {
     "product_review_media": "16:9",
 }
 
-# Logo target widths relative to image width — discreet but readable
-LOGO_WIDTH_RATIO = {
-    "instagram_post": 0.25,       # ~270px on 1080
-    "instagram_story": 0.25,      # ~270px on 1080
-    "blog_hero": 0.14,            # ~224px on 1600
-    "product_review_media": 0.14, # ~224px on 1600
+# Target output sizes for each media type
+TARGET_SIZES = {
+    "instagram_post": (1080, 1080),
+    "instagram_story": (1080, 1920),
+    "blog_hero": (1600, 900),
+    "product_review_media": (1600, 900),
 }
 
-LOGO_PADDING_RATIO = 0.02  # 2% from edges
+# Minimum inner margin in pixels
+INNER_MARGIN = 20
 
 
-def detect_background_brightness(img: Image.Image) -> float:
-    """Sample the top-left region to determine if the background is light or dark."""
-    w, h = img.size
-    sample_w = max(int(w * 0.25), 1)
-    sample_h = max(int(h * 0.10), 1)
-    region = img.crop((0, 0, sample_w, sample_h))
-    gray = region.convert("L")
-    pixels = list(gray.getdata())
-    return sum(pixels) / len(pixels) if pixels else 128
-
-
-def make_logo_transparent(logo_path: str) -> Image.Image:
-    """Load a JPG logo and make the white background transparent."""
-    logo = Image.open(logo_path).convert("RGBA")
-    w, h = logo.size
-    pixels = logo.load()
-
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = pixels[x, y]
-            min_ch = min(r, g, b)
-            avg = (r + g + b) / 3
-
-            if min_ch > 245 and avg > 250:
-                pixels[x, y] = (r, g, b, 0)
-            elif min_ch > 220 and avg > 230:
-                fade = int(255 * (1.0 - (min_ch - 220) / 35.0))
-                pixels[x, y] = (r, g, b, max(0, min(255, fade)))
-
-    return logo
-
-
-def create_backdrop(logo_w: int, logo_h: int, corner_radius: int = 8) -> Image.Image:
+def apply_inner_margin(generated_img_bytes: bytes, media_type: str) -> bytes:
     """
-    Create a subtle semi-transparent white rounded-rect backdrop
-    to place behind the logo on dark backgrounds.
+    Ensure the generated image has at least a 20px inner margin on all sides.
+    The generated content is scaled down slightly and centered, with the
+    edge pixels extended outward to fill the margin area seamlessly.
     """
-    pad_x = int(logo_w * 0.08)
-    pad_y = int(logo_h * 0.15)
-    bw = logo_w + 2 * pad_x
-    bh = logo_h + 2 * pad_y
-
-    backdrop = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(backdrop)
-
-    # Semi-transparent white rounded rectangle
-    r = corner_radius
-    draw.rounded_rectangle(
-        [(0, 0), (bw - 1, bh - 1)],
-        radius=r,
-        fill=(255, 255, 255, 180),  # ~70% opaque white
-    )
-
-    return backdrop, pad_x, pad_y
-
-
-def composite_logo(generated_img_bytes: bytes, media_type: str) -> bytes:
-    """
-    Overlay the darts180 logo onto the generated image.
-    On dark backgrounds, adds a subtle white backdrop behind the logo.
-    Always uses the light-bg logo (it has the full DARTS180.FR text).
-    """
-    img = Image.open(io.BytesIO(generated_img_bytes)).convert("RGBA")
+    img = Image.open(io.BytesIO(generated_img_bytes)).convert("RGB")
     w, h = img.size
 
-    brightness = detect_background_brightness(img)
-    is_dark_bg = brightness < 140
-    print(f"[logo] bg brightness={brightness:.0f}, dark={is_dark_bg}", file=sys.stderr)
+    target_w, target_h = TARGET_SIZES.get(media_type, (w, h))
+    margin = INNER_MARGIN
 
-    # Always use the light-bg logo (has full DARTS180.FR wordmark)
-    logo_rgba = make_logo_transparent(LOGO_LIGHT_BG)
+    # Calculate the inner area where content should live
+    inner_w = target_w - 2 * margin
+    inner_h = target_h - 2 * margin
 
-    # Resize logo to target width
-    ratio = LOGO_WIDTH_RATIO.get(media_type, 0.15)
-    target_logo_w = int(w * ratio)
-    logo_aspect = logo_rgba.width / logo_rgba.height
-    target_logo_h = int(target_logo_w / logo_aspect)
-    logo_resized = logo_rgba.resize(
-        (target_logo_w, target_logo_h), Image.LANCZOS
-    )
+    # Resize the generated image to fit within the inner area
+    img_resized = img.resize((inner_w, inner_h), Image.LANCZOS)
 
-    # Position
-    pad = int(w * LOGO_PADDING_RATIO)
-    pos_x = pad
-    pos_y = pad
+    # Sample the average color from each edge strip (2px deep) of the resized image
+    # to create a natural-looking margin fill
+    def avg_color_strip(image, box):
+        """Get the average color from a region of the image."""
+        strip = image.crop(box)
+        pixels = list(strip.getdata())
+        if not pixels:
+            return (128, 128, 128)
+        r = sum(p[0] for p in pixels) // len(pixels)
+        g = sum(p[1] for p in pixels) // len(pixels)
+        b = sum(p[2] for p in pixels) // len(pixels)
+        return (r, g, b)
 
-    if is_dark_bg:
-        # Add a subtle white backdrop behind the logo
-        backdrop, bpad_x, bpad_y = create_backdrop(
-            target_logo_w, target_logo_h,
-            corner_radius=max(4, int(target_logo_h * 0.12)),
-        )
-        # Place backdrop first
-        backdrop_x = pos_x - bpad_x
-        backdrop_y = pos_y - bpad_y
-        # Ensure backdrop doesn't go negative
-        backdrop_x = max(0, backdrop_x)
-        backdrop_y = max(0, backdrop_y)
-        img.paste(backdrop, (backdrop_x, backdrop_y), backdrop)
-        # Adjust logo position to center on backdrop
-        pos_x = backdrop_x + bpad_x
-        pos_y = backdrop_y + bpad_y
+    # Get dominant edge colors from each side
+    top_color = avg_color_strip(img_resized, (0, 0, inner_w, min(4, inner_h)))
+    bottom_color = avg_color_strip(img_resized, (0, max(0, inner_h - 4), inner_w, inner_h))
+    left_color = avg_color_strip(img_resized, (0, 0, min(4, inner_w), inner_h))
+    right_color = avg_color_strip(img_resized, (max(0, inner_w - 4), 0, inner_w, inner_h))
 
-    # Paste logo
-    img.paste(logo_resized, (pos_x, pos_y), logo_resized)
+    # Blend into a single background color for the margin
+    bg_r = (top_color[0] + bottom_color[0] + left_color[0] + right_color[0]) // 4
+    bg_g = (top_color[1] + bottom_color[1] + left_color[1] + right_color[1]) // 4
+    bg_b = (top_color[2] + bottom_color[2] + left_color[2] + right_color[2]) // 4
+    bg_color = (bg_r, bg_g, bg_b)
+
+    # Create the output canvas with the background color
+    output_img = Image.new("RGB", (target_w, target_h), bg_color)
+
+    # Paste the resized content centered with the margin
+    output_img.paste(img_resized, (margin, margin))
 
     # Save as PNG
     output = io.BytesIO()
-    img.convert("RGB").save(output, format="PNG", quality=95)
+    output_img.save(output, format="PNG", quality=95)
     return output.getvalue()
 
 
@@ -198,8 +138,8 @@ async def generate(request: Request):
             model="gpt-image-1",
         )
 
-        # Composite the real logo
-        final_bytes = composite_logo(result_bytes, media_type)
+        # Apply inner margin (20px on all sides)
+        final_bytes = apply_inner_margin(result_bytes, media_type)
 
         result_b64 = base64.b64encode(final_bytes).decode()
         return JSONResponse(
